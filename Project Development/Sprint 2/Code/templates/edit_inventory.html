@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>Inventory Stocks</title>
+</head>
+
+<body>
+    <style>
+        
+     table{
+      border-collapse: separate;
+      border-spacing: 0 18px;
+    }
+    
+    td {
+            border-top: thin solid;
+            border-bottom: thin solid;
+            border-spacing: 30px 0;
+            border-color: lightgray;
+            padding: 20px 10px;
+            padding-left: 20px;
+            padding-right: 20px;
+            font-family: Open sans;
+            
+
+        }
+
+        table td:first-child {
+            border-left: thin solid;
+            border-color: lightgray;
+        }
+
+        table td:last-child {
+            border-right: thin solid;
+            border-color: lightgray;
+        }
+    
+        h1 {
+        font-size: 40px;
+        font-family:open sans ;
+        margin-left:120px;
+        padding-top:50px;
+        font-weight: bold;
+
+    }
+    h3{
+        display:inline;
+        float:left;
+        width: 15%;
+        margin-left: 250px;
+        font-size: 25px;
+        font-weight: bold;
+    }
+    .box {
+        width: 30%;
+        height: 70px;
+        margin: 15px;
+        margin-left:120px;
+        vertical-align: middle;
+        text-align: left;
+        font-family: 'Open Sans', sans-serif;
+        font-size: 20px;
+        border-width: thin;
+        font-weight: bold;
+
+    }
+    .btn1 {
+        color:white ;
+        border: 2px solid #acc927;
+        background-color: #acc927;
+        padding: 5px 75px;
+        font-family: Open sans;
+    }
+    #btn_submit1 {
+                    background-color: white;
+                    /* Green */
+                    border: 2px solid darkgreen;
+                    color: darkgreen;
+                    padding: 10px 50px;
+                    text-align: center;
+                    text-decoration: none;
+                    font-weight: bold;
+                    font-size: 16px;
+                    margin: 2px 30%;
+                    cursor: pointer;
+                    position: absolute;
+                    top: 35px;
+                    left: 50%;
+
+
+                }
+
+    </style>
+
+    
+<header>
+    <a href='/logout_sess'><img src="{{url_for('static',filename='zang_logo.png')}}" align="left"
+    style="padding: 45px; margin-left:75px;"></a> <br><br><br><br>
+
+    <hr size="1" width="100%" height="50%" color="#cbe386">
+</header>
+
+<h1 align="left">Edit Stocks</h1><br><br>
+
+<div>
+    <h3>Item Name</h3>
+    <h3>Quantity</h3><br><br>
+   
+</div>
+    <div class="box">
+        <table>
+        <form id="myform" action="/edit_inventory" method="POST" >
+           
+                
+                {%for dicts in params%}
+                <tr>
+                    <td ><input type="text" name="{{dicts['Item']}}" id="{{dicts['_id']}}_item" value="{{dicts['Item']}}">
+                    </td>
+                    <td><input type="text" name="{{dicts['Quantity']}}" id="{{dicts['_id']}}_qty"
+                            value="{{dicts['Quantity']}}"></td>
+
+                    <td><input type="text" name="{{dicts['Unit']}}" id="{{dicts['_id']}}_unit" value="{{dicts['Unit']}}"></td>
+
+                    <td><a class="btn1" id="{{dicts['_id']}}" href="/edit_inventory">Submit</a></td>
+                    <!-- <td><button onclick="()=>click_fun()">Change</button></td> -->
+
+                    <!-- <td>{{dicts["Item"]}}</td>
+                    <td>{{dicts["Quantity"]}}</td> -->
+                </tr>
+                    <script>
+                        document.getElementById('{{dicts["_id"]}}').onclick = function click_fun() {
+                            
+
+                            let item = document.getElementById('{{dicts["_id"]}}_item').value;
+                            let qty = document.getElementById('{{dicts["_id"]}}_qty').value;
+                            let unit = document.getElementById('{{dicts["_id"]}}_unit').value;
+                            var xhr = new XMLHttpRequest();
+                            xhr.open("POST","/edit_inv_items", true);
+                            xhr.setRequestHeader('Content-Type', 'application/json');
+                            console.log(item,qty);
+                            xhr.send(JSON.stringify({
+                                _id:'{{dicts["_id"]}}' ,
+                                Item:item,
+                                Quantity:qty,
+                                Unit:unit
+                            }));
+                        }
+                    </script>
+                
+                {%endfor%}
+            
+            <!-- <input style="float: right;" class="btn btn-primary btn-lg btn-block" type="submit" form="myform" /> -->
+        </form>
+    </table>
+    </div>
+
+    <form action="/logout_sess">
+        <button id="btn_submit1">LOGOUT </button>
+      </form>
+
+
+
+
+
+
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>Inventory Stocks</title>
+</head>
+
+<body>
+
+
+
+
+
+
+
+    <div>
+        <h1>Edit Stocks in Inventory</h1>
+
+    </div>
+    <div>
+        <form id="myform" action="/edit_inventory" method="POST" >
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Items</th>
+                        <th>Quantity</th>
+                        <th>Unit</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                {%for dicts in params%}
+                <tr>
+                    <td ><input type="text" name="{{dicts['Item']}}" id="{{dicts['_id']}}_item" value="{{dicts['Item']}}">
+                    </td>
+                    <td><input type="text" name="{{dicts['Quantity']}}" id="{{dicts['_id']}}_qty"
+                            value="{{dicts['Quantity']}}"></td>
+
+                    <td><input type="text" name="{{dicts['Unit']}}" id="{{dicts['_id']}}_unit" value="{{dicts['Unit']}}"></td>
+
+                    <td id="{{dicts['_id']}}"><a class="btn btn-primary" href="/edit_inventory">Submit</a></td>
+                   
+                    <script>
+                        document.getElementById('{{dicts["_id"]}}').onclick = function click_fun() {
+                            
+
+                            let item = document.getElementById('{{dicts["_id"]}}_item').value;
+                            let qty = document.getElementById('{{dicts["_id"]}}_qty').value;
+                            let unit = document.getElementById('{{dicts["_id"]}}_unit').value;
+                            var xhr = new XMLHttpRequest();
+                            xhr.open("POST","/edit_inv_items", true);
+                            xhr.setRequestHeader('Content-Type', 'application/json');
+                            console.log(item,qty);
+                            xhr.send(JSON.stringify({
+                                _id:'{{dicts["_id"]}}' ,
+                                Item:item,
+                                Quantity:qty,
+                                Unit:unit
+                            }));
+                        }
+                    </script>
+                </tr>
+                {%endfor%}
+            </table>
+            
+        </form>
+    </div>
+
+
+
+
+
+
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html> -->

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Inventory Stocks</title>
+  </head>
+  <body>
+    <style>
+
+    body {
+      margin: 0px;
+      padding: 0px;
+    }
+    .in-table{
+      border-color: white;
+    }
+
+    table{
+      border-collapse: separate;
+      border-spacing: 0 18px;
+    }
+    
+    td {
+            border-top: thin solid;
+            border-bottom: thin solid;
+            border-spacing: 30px 0;
+            border-color: lightgray;
+            padding: 18px 0;
+            padding-left: 10px;
+            padding-right: 0px;
+            font-family: Open sans;
+
+
+        }
+
+        table td:first-child {
+            border-left: thin solid;
+            border-color: lightgray;
+        }
+
+        table td:last-child {
+            border-right: thin solid;
+            border-color: lightgray;
+        }
+
+        
+    .button {
+
+      border: 2px solid darkgreen;
+      color:darkgreen;
+      text-align: center;
+
+      padding: 10px;
+      float: right;
+      top: 10px;
+      left: 50%;
+      font-size: 16px;
+      margin: 20px 150px;
+      width: 160px;
+
+      font-family: 'Open Sans', sans-serif;
+      font-weight: 900;
+
+  }
+    a {
+      color: #00442F;
+      position: relative;
+      margin-left: 5px;
+      text-decoration: none;
+      display: relative;
+    }
+    h1 {
+      font-size: 30px;
+      font-family: 'Playfair Display', serif;
+      margin-left:120px;
+      padding-top:50px;
+
+    }
+
+
+/* Create two equal columns that floats next to each other */
+.column {
+  
+  width: 75%;
+  padding: 50px;
+  height: 200px;
+  display: inline-block;
+}
+
+
+
+
+
+.box {
+  width: 30%;
+  height: 70px;
+  margin: 15px;
+  margin-left:120px;
+  
+  vertical-align: middle;
+  
+  text-align: left;
+  
+  font-family: 'Open Sans', sans-serif;
+  font-size: 20px;
+  border-width: thin;
+  font-weight: bold;
+
+}
+
+h1{
+  font-family:open sans ;
+}
+h3{
+  display:inline;
+float:left;
+width: 15%;
+margin-left: 130px;
+}
+
+
+                  #btn_submit1 {
+                    background-color: white;
+                    /* Green */
+                    border: 2px solid darkgreen;
+                    color: darkgreen;
+                    padding: 10px 50px;
+                    text-align: center;
+                    text-decoration: none;
+
+                    font-size: 16px;
+                    margin: 2px 30%;
+                    cursor: pointer;
+                    position: absolute;
+                    top: 35px;
+                    left: 50%;
+
+
+                }
+
+    </style>
+
+          <header>
+            <a href='/logout_sess'><p></p><p></p></a>
+    
+                  <hr size="1" width="100%" height="50%" color="#cbe386">
+          </header>
+
+
+          <h1 align="left">Available Stocks</h1>
+
+          <div>
+            <h3>Items</h3>
+            <h3>Quantity</h3>
+           
+        </div>
+
+
+<div class="box">
+<table id="inventory_tbl">
+
+    {%for dicts in params%}
+    {%if dicts["Quantity"]>=dicts["Treshold"]%}
+    <tr>
+
+        <td>{{dicts["Item"]}}</td>
+        <td>{{dicts["Quantity"]}}</td>
+        <td>{{dicts["Unit"]}}</td>
+
+
+    </tr>
+    {%else %}
+    <tr style="background-color: red;">
+
+        <td>{{dicts["Item"]}}</td>
+        <td>{{dicts["Quantity"]}}</td>
+        <td>{{dicts["Unit"]}}</td>
+
+
+    </tr>
+
+    {%endif %}
+
+    {%endfor%}
+</table>
+</div>
+
+<form action="/logout_sess">
+  <button id="btn_submit1">LOGOUT </button>
+</form>
+
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Stocks</title>
+</head>
+<body>
+
+    <style>
+        #inventory_tbl {
+          font-family: Arial, Helvetica, sans-serif;
+          border-collapse: collapse;
+          
+          width: 100%;
+        }
+        
+        #inventory_tbl td, #inventory_tbl th {
+          border: 1px solid #ddd;
+          padding: 8px;
+        }
+        
+        #inventory_tbl tr:nth-child(even){background-color: #f2f2f2;}
+        
+        #inventory_tbl tr:hover {background-color: #ddd;}
+        
+        #inventory_tbl th {
+          padding-top: 12px;
+          padding-bottom: 12px;
+          text-align: left;
+          background-color: #04AA6D;
+          color: white;
+        }
+        </style>
+
+
+
+
+
+    <div >
+        <h1>Stocks in Inventory</h1>
+    </div>
+    <div >
+
+        
+        
+        <table id="inventory_tbl">
+            <tr>
+                <th>Items</th>
+                <th>Quantity</th>
+                <th>Unit</th>
+            </tr>
+            {%for dicts in params%}
+            {%if dicts["Quantity"]>=dicts["Treshold"]%}
+            <tr>
+                
+                <td>{{dicts["Item"]}}</td>
+                <td>{{dicts["Quantity"]}}</td>
+                <td>{{dicts["Unit"]}}</td>
+                
+                
+            </tr>
+            {%else %}
+            <tr style="background-color: red;">
+                
+                <td>{{dicts["Item"]}}</td>
+                <td>{{dicts["Quantity"]}}</td>
+                <td>{{dicts["Unit"]}}</td>
+                
+                
+            </tr> 
+
+            {%endif %}
+
+            {%endfor%}
+        </table>
+    </div>
+
+</body>
+</html> -->

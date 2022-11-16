@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+    <title>Add into Inventory</title>
+
+</head>
+
+<body>
+    <style>
+        .button1 {
+            padding: 10px;
+            display: block;
+            float: right;
+            font-size: 15px;
+            margin: 20px 150px;
+            cursor: pointer;
+            color: #00442F;
+            text-align: center;
+            border: 2px solid #00442F;
+            width: 125px;
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 900;
+            margin-top: 30px;
+
+
+
+        }
+
+        a {
+            text-decoration: none;
+            color: darkgreen;
+            position: relative;
+            margin-left: 4px;
+
+
+
+
+        }
+
+        h1 {
+            font-size: 28px;
+            font-family: 'Playfair Display', serif;
+            margin-left: 120px;
+            padding-top: 50px;
+
+        }
+
+        .button2 {
+            padding: 10px;
+            display: block;
+            float: center;
+            font-size: 15px;
+            margin: 20px 150px;
+            cursor: pointer;
+            color: #00442F;
+            text-align: center;
+            border: 2px solid #00442F;
+            width: 125px;
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 900;
+
+        }
+
+        .add_submit_btn {
+            width: 30%;
+            height: 40px;
+            background-color: #00442f;
+            color: white;
+            margin-top: 30px;
+            margin-bottom: 10px;
+            text-align: center;
+            border: none;
+            display: static;
+
+        }
+
+        .stocks {
+            margin-left: 70px;
+            padding: 50px;
+        }
+
+        input {
+            line-height: 2.5em;
+        }
+    </style>
+
+    <div class="button1"><a href="/logout_sess">LOG OUT</a></div>
+
+    <a href='/logout_sess'><img src="{{url_for('static',filename='zang_logo.png')}}" align="left"
+            style="padding: 45px; margin-left:75px;"></a>
+
+    <hr size="1" width="100%" height="50%" color="grey">
+
+
+    <h1 align="left">Add Stocks to Inventory</h1>
+
+
+
+    
+
+        <div class="stocks">
+
+            <div class="form-group">
+                <label for="item name">PRODUCT ID</label><br>
+                <input type="text" size="57" class="form-control" id="pdt_id">
+            </div>
+            <br/>
+
+            <div class="form-group">
+                <label for="item name">ITEM NAME</label><br>
+                <input type="text" size="57" class="form-control" id="pdt_name">
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="quantity">QUANTITY</label><br>
+                <input type="text" size="57" class="form-control" id="pdt_qty">
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="threshold">THRESHOLD</label><br>
+                <input type="text" size="57" class="form-control" id="pdt_thres">
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="unit">UNIT</label>
+                <br>
+                <input type="text" size="57" class="form-control" id="pdt_unit">
+            </div>
+
+            <button id="add_inven" class="add_submit_btn">Add stock</button>
+
+        </div>
+    
+    
+
+
+
+    <script>
+        document.getElementById('add_inven').onclick = function rem_fun() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/add_inv_items", true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            let pdt_id = document.getElementById("pdt_id").value;
+            let pdt_name = document.getElementById("pdt_name").value;
+            let pdt_qty = document.getElementById("pdt_qty").value;
+            let pdt_unit = document.getElementById("pdt_unit").value;
+            let pdt_tres = document.getElementById("pdt_thres").value;
+
+            xhr.send(JSON.stringify({
+                Prod_id:pdt_id,
+                Item: pdt_name,
+                Quantity: pdt_qty,
+                Treshold: pdt_tres,
+                Unit: pdt_unit
+
+
+            }));
+            window.location.href = '/add_inventory';
+        }
+    </script>
+
+
+
+
+
+
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>Add into Inventory</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 mx-auto">
+                <div class="card" style="box-shadow: 0 0 25px lightgrey;">
+                    <div class="card-header">
+                        <h4>Add Inventory</h4>
+                    </div>
+                    <div class="card-body">
+                        <form>
+
+                            <table style="width: 800px;">
+                                <thead>
+                                    <tr>
+
+                                        <th style="text-align:center">Items </th>
+                                       
+                                        <th style="text-align:center">Quantity</th>
+                                        <th style="text-align:center">Threshold</th>
+                                        <th style="text-align:center">Unit</th>
+                                        
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody id="add_item">
+                                    <tr>
+
+                                        <td>
+                                            <input id="pdt_name" type="text" class="form-control form-control-sm">
+                                        </td>
+
+                                        <td>
+                                            <input id="pdt_qty" name="qty[]" type="text"
+                                                class="form-control form-control-sm" required>
+                                        </td>
+                                        <td>
+                                            <input type="text"  id="pdt_tres" class="form-control form-control-sm" required>
+                                        </td>
+                                        <td>
+                                            <input type="text" id="pdt_unit" class="form-control form-control-sm" required>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                      
+                        </form>
+                        <div style="padding: 10px;" id="add_inven">
+                            <p id="add_inven"  style="width: 150px;" class="btn btn-success">Add</p>
+                            
+                        </div>
+                        <script>
+                            document.getElementById('add_inven').onclick = function rem_fun() {
+                                var xhr = new XMLHttpRequest();
+                                xhr.open("POST", "/add_inv_items", true);
+                                xhr.setRequestHeader('Content-Type', 'application/json');
+                                let pdt_name = document.getElementById("pdt_name").value;
+                                let pdt_qty = document.getElementById("pdt_qty").value;
+                                let pdt_unit = document.getElementById("pdt_unit").value;
+                                let prdt_tres = document.getElementById("pdt_tres").value;
+                                                                 
+                                xhr.send(JSON.stringify({
+
+                                    Item: pdt_name,
+                                    Quantity: pdt_qty,
+                                    Treshold:prdt_tres,
+                                    Unit : pdt_unit
+                                    
+
+                                }));
+                                window.location.href = '/add_inventory';
+                            }
+                        </script>
+
+                    </div>
+                </div>
+                
+
+
+
+            </div>
+        </div>
+    </div>
+    </div>
+
+</body>
+
+</html> -->

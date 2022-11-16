@@ -1,0 +1,59 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Change Password</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Playfair+Display&display=swap" rel="stylesheet">
+<link
+    rel="stylesheet"
+  />
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='home.css') }}">
+</head>
+<body>
+	<header>
+		<nav>
+			<div class="logo"><img src="{{ url_for('static', filename='pics4.png') }}" alt=""/></div>
+			<div class="menu">
+			<a href="/logout_sess">LOG OUT</a>
+			</div>
+		</nav>
+	
+	<main>
+		<div class="wrapper">
+         <div class="title-text">
+            <div class="title login">
+               Change Password
+            </div>
+          </div>
+         
+            <div class="form-inner">
+               <form method="POST" action="/ivcpassword" class="signup">
+                  <div class="field">
+                  	<label>CURRENT PASSWORD</label>
+                     <input id="icpassw" type="password" name="icpassw" placeholder="Current Password" required>
+                  </div><br>
+
+                  <div class="field">
+                  	<label>NEW PASSWORD</label>
+                     <input input id="inpassw" type="password" name="inpassw" placeholder="New Password" required>
+                  </div><br>
+
+                  <div class="field">
+                  	<label>RE-ENTER NEW PASSWORD</label>
+                     <input input id="irnpassw" type="password" name="irnpassw" placeholder="Re-Enter New Password" required>
+                  </div><br>
+                  <div class="field btn">
+                     <div class="btn-layer"></div>
+                     <a href="#"><input type="submit" value="Login"></a>
+                  </div>
+               </form>
+            </div>
+         </div>
+      </div>
+
+	</main>
+</header>
+
+</body>
+</html>
