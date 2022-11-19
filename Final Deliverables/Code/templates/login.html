@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Login Page with Background Image Example</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
+
+	
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div id="bg"></div>
+
+<form action="/login_val" method="POST">
+
+  <div class="form-field"><h1>Login Page</h1></div>
+
+  <div class="form-field">
+    <input type="text" placeholder="Username" name="username" required/>
+  </div>
+
+  <div class="form-field">
+    <input type="password" placeholder="Password" name="password" required/>
+  </div>
+
+  <div class="form-field">
+    <button class="btn" type="submit">Log in</button>
+  </div>
+</form>
+
+<form>
+  <div class="form-field">
+<bottom class="btn"><a href="/">Want to register?</a></bottom>
+</div>
+</form>
+  
+</body>
+</html>
