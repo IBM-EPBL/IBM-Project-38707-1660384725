@@ -1,34 +1,47 @@
-from flask import Flask,render_template,url_for,request,redirect
+from flask import Flask,render_template,url_for,request,redirect,session
 import pandas as pd
 import numpy as np
-import bcrypt
-from datetime import datetime
 import re
+from flask_session import Session
+import ibm_db
+
 
 
 app = Flask(__name__)
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+#initializing session
+Session(app)
+
+conn = ibm_db.connect("DATABASE=bludb;HOSTNAME=b70af05b-76e4-4bca-a1f5-23dbb4c6a74e.c1ogj3sd0tgtu0lqde00.databases.appdomain.cloud;PORT=32716;Security=SSL;SSLServerCertificate=DigiCertGlobalRootCA.crt;UID=nld81217;PWD=xQrgrKIM3oCr2bVd","","")
+
+
 
 @app.route('/')
 def home():
     return render_template("/register.html")
 
-@app.route('/login',methods=["POST"])
-def login():
-    pat = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
-    if re.match(pat,request.form.get("email")):
-        print("Valid Email")
-    else:
-        return "Invalid Email"
-    
-    hashed_uname = bcrypt.hashpw(bytes(request.form.get('username') , 'utf-8'),bcrypt.gensalt())
-    
-    html = "The username is : <b>"+request.form.get('username')+"</b><br> The email is : <b>"+request.form.get("email")+"</b><br> The ph no is :<b>"+request.form.get("phno")+"</b> </br> Thre login time is : <b>" + str(datetime.now())+"</b>"
-    return html#request.form.get('phno')
 
-@app.route('/login_val',methods=["POST","GET"])
+@app.route('/user_home')
+def user_home():
+    return render_template("/inv_index.html")
+
+
+@app.route('/login_val',methods=["POST"])
 def login_val():
-    username = request.form.get('username')
-    password = request.form.get('password')
+
+    uname = request.form.get("username")
+    password = request.form.get("password")
+
+    stmt = ibm_db.exec_immediate(conn, "SELECT * FROM CREDTABLE WHERE USERNAME='"+uname+"'")
+    result = ibm_db.fetch_both(stmt)
+    print(result)
+    if result and result["PASSWORD"] == password:
+        session['user'] = uname
+        session['email'] = result["EMAIL"]
+        return redirect(url_for('user_home'))
+    
+    return redirect(url_for('login'))
 
 
 @app.route('/register',methods=["POST","GET"])
@@ -39,6 +52,8 @@ def register():
     phno = request.form.get('phno')
 
     ##write to db
+    stmt = ibm_db.exec_immediate(conn, "INSERT INTO CREDTABLE VALUES ('"+ username+"','"+password+"','"+email+"','"+phno +"')")
+
 
     return redirect(url_for('login_page'))
 
@@ -47,6 +62,7 @@ def register():
 def login_page():
 
     return render_template("login.html")
+
 
 
 
